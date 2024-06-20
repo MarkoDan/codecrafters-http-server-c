@@ -86,7 +86,7 @@ int main() {
     }
     else{
     	char *res = "HTTP/1.1 404 Not Found\r\n\r\n"; // Http response
-    	bytes_sent = send(fd, res, strlen(res), 0)''
+    	bytes_sent = send(fd, res, strlen(res), 0);
     }
     
     // Send the HTTP response to the client over the accepted socket.
