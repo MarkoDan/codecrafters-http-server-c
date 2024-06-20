@@ -67,11 +67,30 @@ int main() {
     }
     printf("Client connected\n");
 
+    char readBuffer[1024];
+    char path[512];
+    int bytes_recieved = recv(fd, readBuffer, sizeof(readBuffer), 0);
+
+    // Extract the path
+    char* reqPath = strtok(readBuffer, " ");
+    reqPath = strtok(NULL, " ");
+
+    int bytes_sent;
+
+
     // Prepare an HTTP response message to send to the client.
-    char *reply = "HTTP/1.1 200 OK\r\n\r\n";
+    if (strcmp(reqPath, "/") == 0){
+    	char *reply = "HTTP/1.1 200 OK\r\n\r\n"; // Http response
+    	bytes_sent = send(fd, reply, strlen(reply), 0);
+
+    }
+    else{
+    	char *res = "HTTP/1.1 404 Not Found\r\n\r\n"; // Http response
+    	bytes_sent = send(fd, res, strlen(res), 0)''
+    }
     
     // Send the HTTP response to the client over the accepted socket.
-    int bytes_sent = send(fd, reply, strlen(reply), 0);
+    
     if (bytes_sent < 0){
 
     	printf("Send failed\n");
